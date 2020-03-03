@@ -3,8 +3,8 @@ const LogsService = require("./logs-service");
 
 const logsRouter = express.Router();
 
-logsRouter.route("/").get((req, res, next) => {
-  LogsService.getAllLogs(req.app.get("db"))
+logsRouter.route("/:user_id/").get((req, res, next) => {
+  LogsService.getLogsByUserId(req.app.get("db"), req.params.user_id)
     .then(logs => {
       res.json(logs);
     })

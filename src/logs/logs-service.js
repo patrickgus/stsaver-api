@@ -15,6 +15,16 @@ const LogsService = {
       )
       .leftJoin("stsaver_users AS user", "log.user_id", "user.id")
       .where("log.user_id", user_id);
+  },
+
+  insertLog(db, newLog) {
+    return db
+      .insert(newLog)
+      .into("stsaver_logs")
+      .returning("*")
+      .then(rows => {
+        return rows[0];
+      });
   }
 };
 

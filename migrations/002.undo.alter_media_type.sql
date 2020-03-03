@@ -1,0 +1,3 @@
+ALTER TABLE stsaver_logs DROP COLUMN IF EXISTS media;
+
+DROP TYPE IF EXISTS media_type;

@@ -7,8 +7,8 @@ TRUNCATE
 
 INSERT INTO stsaver_users(first_name, last_name, username, password)
 VALUES
-  ('Test', 'User', 'testuser', 'Test123!'),
-  ('Patrick', 'Gustafson', 'patrickgus', 'Abc1234!');
+  ('Test', 'User', 'testuser', '$2a$12$8OANFtERG4sNsa/ugKSS0.b39MzjdRyDgVeaLYzVdkBSpg47.Nh1W'),
+  ('Patrick', 'Gustafson', 'patrickgus', '$2a$12$LcmgyvWUKG0HPXnq.ZHQVO84HDaTq133Y7fJBG8Oz/oaJCF2GvjKa');
 
 INSERT INTO stsaver_logs(date_logged, start_time, end_time, media, breaks, user_id)
 VALUES

@@ -1,12 +1,14 @@
 const path = require("path");
 const express = require("express");
 const LogsService = require("./logs-service");
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const logsRouter = express.Router();
 const jsonParser = express.json();
 
 logsRouter
   .route("/:user_id/")
+  .all(requireAuth)
   .get((req, res, next) => {
     LogsService.getLogsByUserId(req.app.get("db"), req.params.user_id)
       .then(logs => {
@@ -15,14 +17,16 @@ logsRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { start_time, end_time, media, breaks, user_id } = req.body;
-    const newLog = { start_time, end_time, media, breaks, user_id };
+    const { start_time, end_time, media, breaks } = req.body;
+    const newLog = { start_time, end_time, media, breaks };
 
     for (const [key, value] of Object.entries(newLog))
       if (value == null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
         });
+
+    newLog.user_id = req.user.id;
 
     LogsService.insertLog(req.app.get("db"), newLog)
       .then(log => {
@@ -34,16 +38,20 @@ logsRouter
       .catch(next);
   });
 
-logsRouter.route("/:user_id/hours/").get((req, res, next) => {
-  LogsService.getHoursByUserId(req.app.get("db"), req.params.user_id)
-    .then(hours => {
-      res.json(hours.rows);
-    })
-    .catch(next);
-});
+logsRouter
+  .route("/:user_id/hours/")
+  .all(requireAuth)
+  .get((req, res, next) => {
+    LogsService.getHoursByUserId(req.app.get("db"), req.params.user_id)
+      .then(hours => {
+        res.json(hours.rows);
+      })
+      .catch(next);
+  });
 
 logsRouter
   .route("/:user_id/:log_id/")
+  .all(requireAuth)
   .all(checkLogExists)
   .get((req, res, next) => {
     res.json(res.log);

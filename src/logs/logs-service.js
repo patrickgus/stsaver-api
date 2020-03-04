@@ -36,6 +36,16 @@ const LogsService = {
       .then(rows => {
         return rows[0];
       });
+  },
+
+  getById(db, user_id, log_id) {
+    return LogsService.getLogsByUserId(db, user_id)
+      .where("log.id", log_id)
+      .first();
+  },
+
+  deleteLog(db, user_id, log_id) {
+    return LogsService.getById(db, user_id, log_id).delete();
   }
 };
 

@@ -42,4 +42,42 @@ logsRouter.route("/:user_id/hours/").get((req, res, next) => {
     .catch(next);
 });
 
+logsRouter
+  .route("/:user_id/:log_id/")
+  .all(checkLogExists)
+  .get((req, res, next) => {
+    res.json(res.log);
+  })
+  .delete((req, res, next) => {
+    LogsService.deleteLog(
+      req.app.get("db"),
+      req.params.user_id,
+      req.params.log_id
+    )
+      .then(numRowsAffected => {
+        res.status(204).end();
+      })
+      .catch(next);
+  });
+
+async function checkLogExists(req, res, next) {
+  try {
+    const log = await LogsService.getById(
+      req.app.get("db"),
+      req.params.user_id,
+      req.params.log_id
+    );
+
+    if (!log)
+      return res.status(404).json({
+        error: `Log doesn't exist`
+      });
+
+    res.log = log;
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = logsRouter;

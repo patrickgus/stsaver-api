@@ -46,6 +46,10 @@ const LogsService = {
 
   deleteLog(db, user_id, log_id) {
     return LogsService.getById(db, user_id, log_id).delete();
+  },
+
+  updateLog(db, user_id, log_id, newLogFields) {
+    return LogsService.getById(db, user_id, log_id).update(newLogFields);
   }
 };
 

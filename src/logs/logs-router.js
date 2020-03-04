@@ -58,6 +58,29 @@ logsRouter
         res.status(204).end();
       })
       .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    const { start_time, end_time, media, breaks } = req.body;
+    const logToUpdate = { start_time, end_time, media, breaks };
+
+    const numberOfValues = Object.values(logToUpdate).filter(Boolean).length;
+    if (numberOfValues === 0)
+      return res.status(400).json({
+        error: {
+          message: `Request body must content either 'start_time', 'end_time', 'media', 'breaks'`
+        }
+      });
+
+    LogsService.updateLog(
+      req.app.get("db"),
+      req.params.user_id,
+      req.params.log_id,
+      logToUpdate
+    )
+      .then(numRowsAffected => {
+        res.status(204).end();
+      })
+      .catch(next);
   });
 
 async function checkLogExists(req, res, next) {

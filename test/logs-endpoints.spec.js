@@ -26,12 +26,10 @@ describe("Logs Endpoints", function() {
       beforeEach(() => helpers.seedUsers(db, testUsers));
 
       it(`responds with 200 and an empty list`, () => {
-        return (
-          supertest(app)
-            .get(`/api/logs/${testUsers[0].id}`)
-            // .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
-            .expect(200, [])
-        );
+        return supertest(app)
+          .get(`/api/logs/${testUsers[0].id}`)
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .expect(200, []);
       });
     });
 
@@ -44,12 +42,10 @@ describe("Logs Endpoints", function() {
         const expectedLogs = testLogs.map(log =>
           helpers.makeExpectedLog(testUsers[0], log)
         );
-        return (
-          supertest(app)
-            .get(`/api/logs/${testUsers[0].id}`)
-            // .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
-            .expect(200, expectedLogs)
-        );
+        return supertest(app)
+          .get(`/api/logs/${testUsers[0].id}`)
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .expect(200, expectedLogs);
       });
     });
   });
@@ -60,12 +56,10 @@ describe("Logs Endpoints", function() {
 
       it(`responds with 404`, () => {
         const logId = 123456;
-        return (
-          supertest(app)
-            .get(`/api/logs/${testUsers[0].id}/${logId}`)
-            // .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
-            .expect(404, { error: `Log doesn't exist` })
-        );
+        return supertest(app)
+          .get(`/api/logs/${testUsers[0].id}/${logId}`)
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .expect(404, { error: `Log doesn't exist` });
       });
     });
 
@@ -81,12 +75,10 @@ describe("Logs Endpoints", function() {
           testLogs[logId - 1]
         );
 
-        return (
-          supertest(app)
-            .get(`/api/logs/${testUsers[0].id}/${logId}`)
-            // .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
-            .expect(200, expectedLog)
-        );
+        return supertest(app)
+          .get(`/api/logs/${testUsers[0].id}/${logId}`)
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .expect(200, expectedLog);
       });
     });
   });
@@ -100,78 +92,65 @@ describe("Logs Endpoints", function() {
         start_time: new Date("2020-03-02 9:00"),
         end_time: new Date("2020-03-02 14:00"),
         media: "Computer",
-        breaks: 8,
-        user_id: testUser.id
+        breaks: 8
       };
-      return (
-        supertest(app)
-          .post(`/api/logs/${testUser.id}`)
-          // .set("Authorization", helpers.makeAuthHeader(testUser))
-          .send(newLog)
-          .expect(201)
-          .expect(res => {
-            expect(res.body.start_time).to.eql(newLog.start_time.toISOString());
-            expect(res.body.end_time).to.eql(newLog.end_time.toISOString());
-            expect(res.body.media).to.eql(newLog.media);
-            expect(res.body.breaks).to.eql(newLog.breaks);
-            expect(res.body.user_id).to.eql(newLog.user_id);
-            expect(res.body).to.have.property("id");
-            expect(res.headers.location).to.eql(
-              `/api/logs/${testUser.id}/${res.body.id}`
-            );
-            const expected = new Date().toLocaleString();
-            const actual = new Date(res.body.date_added).toLocaleString();
-            expect(actual).to.eql(expected);
-          })
-          .expect(res =>
-            db
-              .from("stsaver_logs")
-              .select("*")
-              .where({ id: res.body.id })
-              .first()
-              .then(row => {
-                expect(row.start_time).to.eql(newLog.start_time);
-                expect(row.end_time).to.eql(newLog.end_time);
-                expect(row.media).to.eql(newLog.media);
-                expect(row.breaks).to.eql(newLog.breaks);
-                expect(row.user_id).to.eql(testUser.id);
-                const expectedDate = new Date().toLocaleString();
-                const actualDate = new Date(row.date_added).toLocaleString();
-                expect(actualDate).to.eql(expectedDate);
-              })
-          )
-      );
+      return supertest(app)
+        .post(`/api/logs/${testUser.id}`)
+        .set("Authorization", helpers.makeAuthHeader(testUser))
+        .send(newLog)
+        .expect(201)
+        .expect(res => {
+          expect(res.body.start_time).to.eql(newLog.start_time.toISOString());
+          expect(res.body.end_time).to.eql(newLog.end_time.toISOString());
+          expect(res.body.media).to.eql(newLog.media);
+          expect(res.body.breaks).to.eql(newLog.breaks);
+          expect(res.body).to.have.property("id");
+          expect(res.headers.location).to.eql(
+            `/api/logs/${testUser.id}/${res.body.id}`
+          );
+          const expected = new Date().toLocaleString();
+          const actual = new Date(res.body.date_added).toLocaleString();
+          expect(actual).to.eql(expected);
+        })
+        .expect(res =>
+          db
+            .from("stsaver_logs")
+            .select("*")
+            .where({ id: res.body.id })
+            .first()
+            .then(row => {
+              expect(row.start_time).to.eql(newLog.start_time);
+              expect(row.end_time).to.eql(newLog.end_time);
+              expect(row.media).to.eql(newLog.media);
+              expect(row.breaks).to.eql(newLog.breaks);
+              expect(row.user_id).to.eql(testUser.id);
+              const expectedDate = new Date().toLocaleString();
+              const actualDate = new Date(row.date_added).toLocaleString();
+              expect(actualDate).to.eql(expectedDate);
+            })
+        );
     });
 
-    const requiredFields = [
-      "start_time",
-      "end_time",
-      "media",
-      "breaks",
-      "user_id"
-    ];
+    const requiredFields = ["start_time", "end_time", "media", "breaks"];
 
     requiredFields.forEach(field => {
       const newLog = {
         start_time: new Date("2020-03-02 9:00"),
         end_time: new Date("2020-03-02 14:00"),
         media: "Computer",
-        breaks: 8,
-        user_id: testUsers[0].id
+        breaks: 8
       };
 
       it(`responds with 400 and an error message when the '${field}' is missing`, () => {
         delete newLog[field];
 
-        return (
-          supertest(app)
-            .post(`/api/logs/${testUsers[0].id}`)
-            // .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
-            .send(newLog)
-            .expect(400, {
-              error: { message: `Missing '${field}' in request body` }
-            })
-        );
+        return supertest(app)
+          .post(`/api/logs/${testUsers[0].id}`)
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .send(newLog)
+          .expect(400, {
+            error: { message: `Missing '${field}' in request body` }
+          });
       });
     });
   });

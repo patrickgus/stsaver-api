@@ -17,8 +17,8 @@ function makeLogsArray(users) {
   return [
     {
       id: 1,
-      start_time: "2020-02-24 16:00:00",
-      end_time: "2020-02-24 18:00:00",
+      start_time: "2020-02-24 16:00",
+      end_time: "2020-02-24 18:00",
       media: "Phone",
       breaks: 0,
       date_added: "2020-02-24T20:28:32.615Z",
@@ -26,8 +26,8 @@ function makeLogsArray(users) {
     },
     {
       id: 2,
-      start_time: "2020-02-25 13:00:00",
-      end_time: "2020-02-25 16:00:00",
+      start_time: "2020-02-25 13:00",
+      end_time: "2020-02-25 16:00",
       media: "Computer",
       breaks: 5,
       date_added: "2020-02-25T18:00:32.615Z",
@@ -35,8 +35,8 @@ function makeLogsArray(users) {
     },
     {
       id: 3,
-      start_time: "2020-02-26 7:00:00",
-      end_time: "2020-02-26 11:00:00",
+      start_time: "2020-02-26 7:00",
+      end_time: "2020-02-26 11:00",
       media: "Computer",
       breaks: 10,
       date_added: "2020-02-26T16:28:32.615Z",

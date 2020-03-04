@@ -9,14 +9,6 @@ function makeUsersArray() {
       last_name: "User1",
       username: "test-user-1",
       password: "secret"
-    },
-    {
-      id: 2,
-      date_joined: "2020-03-01T16:28:32.615Z",
-      first_name: "Test",
-      last_name: "User2",
-      username: "test-user-2",
-      password: "password"
     }
   ];
 }
@@ -49,26 +41,31 @@ function makeLogsArray(users) {
       breaks: 10,
       date_added: "2020-02-26T16:28:32.615Z",
       user_id: users[0].id
-    },
-    {
-      id: 4,
-      start_time: "2020-03-02 8:00:00",
-      end_time: "2020-03-02 13:00:00",
-      media: "Tablet",
-      breaks: 15,
-      date_added: "2020-03-02T14:00:32.615Z",
-      user_id: users[1].id
-    },
-    {
-      id: 5,
-      start_time: "2020-03-02 16:00:00",
-      end_time: "2020-03-02 18:00:00",
-      media: "Phone",
-      breaks: 0,
-      date_added: "2020-03-02T20:00:32.615Z",
-      user_id: users[1].id
     }
   ];
+}
+
+function makeExpectedLog(user, log) {
+  const hours = calculateHours(log);
+
+  return {
+    id: log.id,
+    start_time: new Date(log.start_time).toISOString(),
+    end_time: new Date(log.end_time).toISOString(),
+    media: log.media,
+    breaks: log.breaks,
+    date_added: log.date_added,
+    user_id: user.id,
+    hours
+  };
+}
+
+function calculateHours(log) {
+  const start = new Date(log.start_time);
+  const end = new Date(log.end_time);
+  const res = Math.abs(end - start) / 1000;
+
+  return Math.floor(res / 3600) % 24;
 }
 
 function makeLogsFixtures() {
@@ -127,6 +124,7 @@ function seedLogsTables(db, users, logs, reviews = []) {
 module.exports = {
   makeUsersArray,
   makeLogsArray,
+  makeExpectedLog,
   makeLogsFixtures,
   cleanTables,
   seedUsers,

@@ -15,7 +15,7 @@ logsRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { start_time, end_time, media, breaks,user_id } = req.body;
+    const { start_time, end_time, media, breaks, user_id } = req.body;
     const newLog = { start_time, end_time, media, breaks, user_id };
 
     for (const [key, value] of Object.entries(newLog))
@@ -33,5 +33,13 @@ logsRouter
       })
       .catch(next);
   });
+
+logsRouter.route("/:user_id/hours/").get((req, res, next) => {
+  LogsService.getHoursByUserId(req.app.get("db"), req.params.user_id)
+    .then(hours => {
+      res.json(hours.rows);
+    })
+    .catch(next);
+});
 
 module.exports = logsRouter;

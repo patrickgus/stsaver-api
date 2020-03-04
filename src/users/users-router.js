@@ -91,6 +91,19 @@ usersRouter
         }
       });
 
+    // if (password) {
+    //   const passwordError = UsersService.validatePassword(password);
+    //   if (passwordError) {
+    //     return res.status(400).json({ error: passwordError });
+    //   }
+
+    //   return UsersService.hashPassword(password).then(hashedPassword => {
+    //     userToUpdate = {
+    //       password: hashedPassword
+    //     };
+    //   });
+    // }
+
     UsersService.updateUser(req.app.get("db"), req.params.user_id, userToUpdate)
       .then(numRowsAffected => {
         res.status(204).end();

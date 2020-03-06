@@ -1,8 +1,8 @@
 CREATE TYPE media_type AS ENUM (
-  'Computer',
-  'Phone',
-  'Tablet',
-  'Television'
+  'computer',
+  'phone',
+  'tablet',
+  'television'
 );
 
 ALTER TABLE stsaver_logs

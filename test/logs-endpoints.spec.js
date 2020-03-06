@@ -91,7 +91,7 @@ describe("Logs Endpoints", function() {
       const newLog = {
         start_time: new Date("2020-03-02 9:00"),
         end_time: new Date("2020-03-02 14:00"),
-        media: "Computer",
+        media: "computer",
         breaks: 8
       };
       return supertest(app)
@@ -137,7 +137,7 @@ describe("Logs Endpoints", function() {
       const newLog = {
         start_time: new Date("2020-03-02 9:00"),
         end_time: new Date("2020-03-02 14:00"),
-        media: "Computer",
+        media: "computer",
         breaks: 8
       };
 

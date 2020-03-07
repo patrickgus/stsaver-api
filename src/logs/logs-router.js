@@ -44,7 +44,7 @@ logsRouter
   .get((req, res, next) => {
     LogsService.getHoursByUserId(req.app.get("db"), req.params.user_id)
       .then(hours => {
-        res.json(hours.rows);
+        res.json(hours);
       })
       .catch(next);
   });

@@ -18,14 +18,18 @@ const LogsService = {
   },
 
   getHoursByUserId(db, user_id) {
-    return db.raw(
-      `SELECT SUM(hours) FROM
+    return db
+      .select(
+        db.raw(
+          `SUM(hours) FROM
         (SELECT 
           (DATE_PART('day',  log.end_time::timestamp - log.start_time::timestamp) * 24 + 
           DATE_PART('hour', log.end_time::timestamp - log.start_time::timestamp)) AS hours
         FROM stsaver_logs AS log
         WHERE log.user_id = ${user_id}) AS total_hours`
-    );
+        )
+      )
+      .first();
   },
 
   insertLog(db, newLog) {

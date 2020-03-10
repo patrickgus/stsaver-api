@@ -14,7 +14,8 @@ const LogsService = {
           DATE_PART('hour', log.end_time::timestamp - log.start_time::timestamp)) AS hours`)
       )
       .leftJoin("stsaver_users AS user", "log.user_id", "user.id")
-      .where("log.user_id", user_id);
+      .where("log.user_id", user_id)
+      .orderBy("log.id");
   },
 
   getHoursByUserId(db, user_id) {

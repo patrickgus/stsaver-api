@@ -9,7 +9,7 @@ const LogsService = {
         "log.media",
         "log.breaks",
         "log.date_added",
-        ...userFields,
+        "log.user_id",
         db.raw(`(DATE_PART('day',  log.end_time::timestamp - log.start_time::timestamp) * 24 + 
           DATE_PART('hour', log.end_time::timestamp - log.start_time::timestamp)) AS hours`)
       )
@@ -57,13 +57,5 @@ const LogsService = {
     return LogsService.getById(db, user_id, log_id).update(newLogFields);
   }
 };
-
-const userFields = [
-  "user.id AS user:id",
-  "user.username AS user:username",
-  "user.first_name AS user:first_name",
-  "user.last_name AS user:last_name",
-  "user.date_joined AS user:date_joined"
-];
 
 module.exports = LogsService;

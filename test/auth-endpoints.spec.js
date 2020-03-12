@@ -83,7 +83,8 @@ describe("Auth Endpoints", function() {
         .post("/api/auth/login")
         .send(userValidCreds)
         .expect(200, {
-          authToken: expectedToken
+          authToken: expectedToken,
+          userId: testUser.id
         });
     });
   });

@@ -1,31 +1,56 @@
-# Express Boilerplate!
+# STSaver
 
-This is a boilerplate project used for starting new projects!
+[Live Page](https://stsaver-app.now.sh/)
 
-## Set up
+[Front End Repo](https://github.com/patrickgus/stsaver-app)
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Summary
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+STSaver is a screen-time tracker app where users can log their time looking at a screen whether it be a computer screen, phone screen, tablet screen, or a television screen. Users will be able to see their activity in the past 7 days in an activity bar-chart. There is also a timer where the user will be able to set a time for a work session and a break session and will be alerted by an alarm.
 
-## Scripts
+## Built with:
 
-Start the application `npm start`
+  - React.js
+  - Node.js
+  - Express.js
+  - PostgreSQL
+  - REST API
+  - CSS
+  - HTML
+  - jQuery
+  - Mocha
+  - Chai
 
-Start nodemon for the application `npm run dev`
+## Screenshots of the user's journey
 
-Run the tests `npm test`
+To demo the app you can click on the 'demo' button at the bottom of the login form.
 
-## Deploying
+Or you could make your own user profile if you like. You would just need to supply your first name, last name, a username, and a protected password.
+_We do not share any personal information with anyone else._
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+### Landing Page:
+![STSaver-LandingPage](https://user-images.githubusercontent.com/53308172/76572448-59e09e00-6477-11ea-8f3e-ddd21d258942.png)
+If you click on the 'Register' link in the top, right-hand corner of the page, you will be brought to the Registration Page.
+### Registration Page:
+![STSaver-RegistrationPage](https://user-images.githubusercontent.com/53308172/76572479-6ebd3180-6477-11ea-9472-16f3d4966fae.png)
+If you successfully log in with a correct username and password, you will be brought to the Activity page.
+### Activity Page:
+![STSaver-ActivityPage](https://user-images.githubusercontent.com/53308172/76572521-8694b580-6477-11ea-8191-8da4fda8cc4d.png)
+Clicking on 'Add Log' in the top navigation menu will let you add a new log to your Activity page.
+### Add Log Page:
+![STSaver-AddLogPage](https://user-images.githubusercontent.com/53308172/76572591-b5ab2700-6477-11ea-9035-b24f854e5653.png)
+Clicking on 'Timer' in the top navigation menu will bring you to the Timer page.
+### Timer Page:
+![STSaver-TimerPage](https://user-images.githubusercontent.com/53308172/76572644-e1c6a800-6477-11ea-8c5e-788a6b1ef45a.png)
+Here you can set a timer for your work session and break session.
+## API Docs
 
+GET, POST, DELETE, and PATCH fetch requests are made via RESTful API.
 
-## Seeding tables
+Base API URL is 'https://obscure-oasis-82471.herokuapp.com/api'
 
-Use the code `\i 'C:/Users/patri/Projects/stsaver-api/seeds/seed.stsaver_tables.sql'` to seed the database tables.
+### Endpoints:
+
+  - '/logs'
+  - '/users'
+  - '/auth'

@@ -1,4 +1,4 @@
-# STSaver
+# STSaver Server
 
 [Live Page](https://stsaver-app.now.sh/)
 
